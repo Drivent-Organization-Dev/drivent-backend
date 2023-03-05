@@ -14,6 +14,29 @@ async function main() {
         endsAt: dayjs().add(21, "days").toDate(),
       },
     });
+
+    await prisma.ticketType.createMany({
+      data: [
+        {
+          name: "presencialComHotel",
+          price: 60000,
+          includesHotel: true,
+          isRemote: false
+        },
+        {
+          name: "presencialSemHotel",
+          price: 25000,
+          includesHotel: false,
+          isRemote: false
+        },
+        {
+          name: "online",
+          price: 10000,
+          includesHotel: false,
+          isRemote: true
+        }
+      ]
+    })
   }
 
   console.log({ event });
