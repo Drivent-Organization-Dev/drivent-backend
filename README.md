@@ -130,3 +130,8 @@ There are several things you need to do when you add new ENV VARIABLES:
 - Add them to your docker-compose.yml file (just the name, not the value). Only envs listed in the environment section will be exposed to your docker container.
 - Add them (prod version) to your github repo secrets. They will be used to generate the `.env` file on deploy.
 - Add them (prod version) to test.yml file on .github/workflows/test.yml.
+
+
+
+
+     sudo apt install node-aproba node-archy node-cacache node-chalk node-cli-table3 node-colors node-columnify  node-debug  node-emoji-rege node-got node-graceful-fs node-gyp node-https-proxy-agent node-mkdirp node-ms node-nopt node-normalize-package-data node-npm-package-arg node-npmlog node-read-package-json node-rimraf node-semver node-ssri node-string-width node-strip-ansi node-tar node-validate-npm-package-name 
