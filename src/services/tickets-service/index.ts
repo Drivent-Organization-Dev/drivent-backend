@@ -3,6 +3,8 @@ import ticketRepository from "@/repositories/ticket-repository";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import { TicketStatus } from "@prisma/client";
 
+export type ticketTypeParams = { isRemote: boolean, includesHotel: boolean, price: number,}
+
 async function getTicketTypes() {
   const ticketTypes = await ticketRepository.findTicketTypes();
 
@@ -38,16 +40,31 @@ async function createTicket(userId: number, ticketTypeId: number) {
   };
 
   await ticketRepository.createTicket(ticketData);
-
   const ticket = await ticketRepository.findTicketByEnrollmentId(enrollment.id);
-
   return ticket;
+}
+
+async function createTicketType(userId: number, ticketTypeRequest: ticketTypeParams) {
+  const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
+  if (!enrollment) { throw notFoundError(); }
+
+  const ticketTypeData = {
+    name: enrollment.name,
+    isRemote: ticketTypeRequest.isRemote,
+    includesHotel: ticketTypeRequest.includesHotel,
+    price: ticketTypeRequest.price,
+  };
+
+  const ticketType = await ticketRepository.createTicketType(ticketTypeData);
+  return ticketType;
 }
 
 const ticketService = {
   getTicketTypes,
   getTicketByUserId,
-  createTicket
+  createTicket,
+  createTicketType,
 };
 
 export default ticketService;
+
