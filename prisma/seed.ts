@@ -37,6 +37,37 @@ async function main() {
         }
       ]
     })
+
+    await prisma.hotel.createMany({
+      data: [
+        {
+          name: "Ocean Palace Resort",
+          image: "https://viajandocomamalarosa.com.br/wp-content/uploads/2020/05/Ocean-Palace.jpg"
+        },
+        {
+          name: "Atlantis Hotel",
+          image: "https://media-cdn.tripadvisor.com/media/photo-s/23/b2/2e/64/atlantis-the-palm.jpg"
+        },
+        {
+          name: "Bellagio Hotel",
+          image: "https://media-cdn.tripadvisor.com/media/photo-s/1c/8a/e0/b9/bellagio-las-vegas.jpg"
+        }
+      ]
+    })
+
+    const hotels = await prisma.hotel.findMany({})
+
+    hotels.map(async (hotel) => {
+      for(let i=1; i<13; i++){
+        await prisma.room.create({
+          data:{
+            name: (i).toString(),
+            capacity: Math.ceil(Math.random()*3),
+            hotelId: hotel.id
+          }
+        })
+      }
+    })
   }
 
   console.log({ event });

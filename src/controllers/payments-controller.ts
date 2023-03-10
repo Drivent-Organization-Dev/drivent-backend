@@ -44,7 +44,9 @@ export async function paymentProcess(req: AuthenticatedRequest, res: Response) {
 
     return res.status(httpStatus.OK).send(payment);
   } catch (error) {
+    console.log(error)
     if (error.name === "UnauthorizedError") {
+      console.log(error)
       return res.sendStatus(httpStatus.UNAUTHORIZED);
     }
     return res.sendStatus(httpStatus.NOT_FOUND);

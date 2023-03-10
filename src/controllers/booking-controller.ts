@@ -2,6 +2,7 @@ import { AuthenticatedRequest } from "@/middlewares";
 import { Response } from "express";
 import httpStatus from "http-status";
 import bookingService from "@/services/booking-service";
+import bookingRepository from "@/repositories/booking-repository";
 
 export async function listBooking(req: AuthenticatedRequest, res: Response) {
   try {
@@ -35,6 +36,22 @@ export async function bookingRoom(req: AuthenticatedRequest, res: Response) {
     if (error.name === "CannotBookingError") {
       return res.sendStatus(httpStatus.FORBIDDEN);
     }
+    return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+}
+
+export async function listBookedRooms (req: AuthenticatedRequest, res: Response) {
+  
+  const {userId} = req
+  const hotelId = Number(req.params.hotelId)
+
+  try {
+
+    const rooms = await bookingRepository.getBookedRooms(hotelId)
+
+    return res.status(200).send(rooms)
+  } catch (error) {
+
     return res.sendStatus(httpStatus.NOT_FOUND);
   }
 }
