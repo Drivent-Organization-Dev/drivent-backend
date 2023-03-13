@@ -16,6 +16,8 @@ export async function getEnrollmentByUser(req: AuthenticatedRequest, res: Respon
 }
 
 export async function postCreateOrUpdateEnrollment(req: AuthenticatedRequest, res: Response) {
+  console.log("opa")
+
   try {
     await enrollmentsService.createOrUpdateEnrollmentWithAddress({
       ...req.body,
