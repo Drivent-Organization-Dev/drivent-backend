@@ -68,6 +68,116 @@ async function main() {
         })
       }
     })
+
+    await prisma.day.createMany({
+      data: [
+        {
+          day: "Sexta",
+          date: "22/10"
+        },
+        {
+          day: "Sábado",
+          date: "23/10"
+        },
+        {
+          day: "Domingo",
+          date: "24/10"
+        }
+      ]
+    })
+
+    await prisma.activity.createMany({
+      data: [
+        {
+          name: "Minecraft: Montando o PC ideal",
+          dayId: 1,
+          place: "Auditório Principal",
+          start: 9,
+          end: 10,
+          vacancies: 30
+        },
+        {
+          name: "Lol: Montando o PC ideal",
+          dayId: 1,
+          place: "Auditório Principal",
+          start: 10,
+          end: 11,
+          vacancies: 30
+        },
+        {
+          name: "CS GO: Montando o PC ideal",
+          dayId: 1,
+          place: "Auditório Principal",
+          start: 13,
+          end: 14,
+          vacancies: 30
+        },
+        {
+          name: "Aula de Ninjutsu",
+          dayId: 1,
+          place: "Auditório Lateral",
+          start: 9,
+          end: 10,
+          vacancies: 22
+        },
+        {
+          name: "Aula de Genjutsu",
+          dayId: 1,
+          place: "Auditório Lateral",
+          start: 10,
+          end: 11,
+          vacancies: 22
+        },
+        {
+          name: "Telecurso 2000",
+          dayId: 1,
+          place: "Sala de Workshop",
+          start: 9,
+          end: 10,
+          vacancies: 18
+        },
+        {
+          name: "Minecraft: Montando o PC ideal",
+          dayId: 2,
+          place: "Auditório Principal",
+          start: 9,
+          end: 10,
+          vacancies: 30
+        },
+        {
+          name: "Lol: Montando o PC ideal",
+          dayId: 2,
+          place: "Auditório Principal",
+          start: 10,
+          end: 11,
+          vacancies: 30
+        },
+        {
+          name: "Aula de Ninjutsu",
+          dayId: 2,
+          place: "Auditório Lateral",
+          start: 9,
+          end: 10,
+          vacancies: 22
+        },
+        {
+          name: "Telecurso 2000",
+          dayId: 2,
+          place: "Sala de Workshop",
+          start: 9,
+          end: 10,
+          vacancies: 18
+        },
+        {
+          name: "Minecraft: Montando o PC ideal",
+          dayId: 3,
+          place: "Auditório Principal",
+          start: 9,
+          end: 10,
+          vacancies: 30
+        },
+      ]
+    })
   }
 
   console.log({ event });
