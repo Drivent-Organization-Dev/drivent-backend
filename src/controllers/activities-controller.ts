@@ -23,7 +23,24 @@ export async function listActivities(req: AuthenticatedRequest, res: Response) {
         }
         return res.sendStatus(httpStatus.NOT_FOUND);
     }
+}
 
+export async function enrollAcitivity(req: AuthenticatedRequest, res: Response) {
+    try {
+        const { userId } = req;
+        const { activityId } = req.body;
+        console.log(activityId)
 
+        if (!activityId) return res.sendStatus(BAD_REQUEST)
 
+        await activitiesService.enrollActivity(userId, activityId)
+
+        return res.sendStatus(httpStatus.OK)
+
+    } catch (error) {
+        if (error.name === "UnauthorizedError") {
+            return res.sendStatus(httpStatus.UNAUTHORIZED);
+        }
+        return res.sendStatus(httpStatus.NOT_FOUND);
+    }
 }

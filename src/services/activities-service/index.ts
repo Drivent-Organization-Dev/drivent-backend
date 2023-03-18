@@ -5,7 +5,7 @@ import ticketRepository from "@/repositories/ticket-repository";
 
 
 
-async function listActivities(userId: number, day: string) {
+async function listActivities(userId: number) {
 
     const enrollment = await enrollmentRepository.findWithAddressByUserId(userId);
     if (!enrollment) {
@@ -22,18 +22,31 @@ async function listActivities(userId: number, day: string) {
 
 async function getActivities(userId: number, day: string) {
 
-    await listActivities(userId, day);
+    await listActivities(userId);
 
-    const dayId = await activitiesRepository.getDayActivity(day)
-    if (!dayId) throw notFoundError
+    const dayId = await activitiesRepository.getDayActivity(day);
+    if (!dayId) throw notFoundError();
 
-    const activities = await activitiesRepository.getActivities(dayId.id)
+    const activities = await activitiesRepository.getActivities(dayId.id);
 
     return activities;
 
 }
 
+async function enrollActivity(userId: number, activityId: number) {
+    await listActivities(userId);
+
+    const activity  = await activitiesRepository.getActivityByID(activityId);
+    if (activity.vacancies === 0) throw unauthorizedError();
+
+    await activitiesRepository.enrollActivity(userId, activityId);
+    await activitiesRepository.fillVacancy(activityId)
+
+    return
+}
+
 
 export const activitiesService = {
-    getActivities
+    getActivities,
+    enrollActivity
 }
