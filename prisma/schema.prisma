@@ -168,4 +168,6 @@ model Vacancies {
   userId    Int
   Activity   Activity   @relation(fields: [activityId], references: [id])
   activityId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
