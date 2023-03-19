@@ -55,10 +55,23 @@ async function fillVacancy(activityId: number) {
     })
 }
 
+async function userActivities(userId: number) {
+
+    return prisma.vacancies.findMany({
+        where: {
+            userId
+        },
+        select: {
+            activityId: true
+        }
+    })
+}
+
 export const activitiesRepository = {
     getDayActivity,
     getActivities,
     getActivityByID,
     enrollActivity,
-    fillVacancy
+    fillVacancy,
+    userActivities
 }

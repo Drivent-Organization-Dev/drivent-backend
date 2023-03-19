@@ -28,8 +28,15 @@ async function getActivities(userId: number, day: string) {
     if (!dayId) throw notFoundError();
 
     const activities = await activitiesRepository.getActivities(dayId.id);
+    const userActivities = await activitiesRepository.userActivities(userId)
+    const userActivitiesArray = []
+    
+    for (let i = 0; i < userActivities.length; i++) {
+        userActivitiesArray.push(userActivities[i].activityId)
+    }
+    console.log(userActivitiesArray)
 
-    return activities;
+    return ({activities, userActivitiesArray});
 
 }
 
