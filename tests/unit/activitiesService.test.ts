@@ -85,7 +85,7 @@ describe("activities test", () => {
         expect(activities).not.toHaveLength(0)
     })
     it("should return activities list and user activities array must not be empty ", async () => {
-
+        
         jest.spyOn(enrollmentRepository, "findWithAddressByUserId").mockImplementationOnce((): any => {
             return {
                 id: 1,
@@ -168,6 +168,62 @@ describe("activities test", () => {
         const { activities, userActivitiesArray } = await activitiesService.getActivities(1, "20-03-2023")
         expect(userActivitiesArray).not.toHaveLength(0)
         expect(activities).not.toHaveLength(0)
+    })
+    it("should call function to enrollActivity and fillVacancy ", async () => {
+        jest.spyOn(enrollmentRepository, "findWithAddressByUserId").mockImplementationOnce((): any => {
+            return {
+                id: 1,
+                name: "teste",
+                cpf: "1111111111111",
+                birthday: "01-01-01",
+                phone: "11111111111",
+                userId: 1,
+                createdAt: "01-01-01",
+                updatedAt: "01-01-01"
+            }
+        })
+        jest.spyOn(ticketRepository, "findTicketByEnrollmentId").mockImplementationOnce((): any => {
+            return {
+                id: 1,
+                ticketTypeId: 3,
+                enrollmentId: 1,
+                status: "PAID",
+                createdAt: "01-01-01",
+                updatedAt: "01-01-01"
+            }
+        })
+        jest.spyOn(ticketRepository, "findTickeWithTypeById").mockImplementationOnce((): any => {
+            return {
+                id: 1,
+                ticketTypeId: 3,
+                enrollmentId: 1,
+                status: "PAID",
+                createdAt: "01-01-01",
+                updatedAt: "01-01-01",
+                TicketType: {
+                    id: 1,
+                    name: 'party',
+                    price: 1075,
+                    isRemote: false,
+                    includesHotel: true,
+                  }
+            }
+        })
+        jest.spyOn(activitiesRepository,"getActivityByID").mockImplementationOnce(():any =>{
+            return{
+                vacancies: 20
+            }
+        })
+        jest.spyOn(activitiesRepository, "enrollActivity").mockImplementationOnce(():any =>{
+            return "i`ve been mocked 1"
+        })
+        jest.spyOn(activitiesRepository, "fillVacancy").mockImplementationOnce(():any =>{
+            return "i`ve been mocked 2"
+        })
+        const result1 = await activitiesRepository.enrollActivity(1,1);
+        const result2 = await activitiesRepository.fillVacancy(1);
+        expect(result1).toEqual("i`ve been mocked 1")
+        expect(result2).toEqual("i`ve been mocked 2")
     })
     
 })
