@@ -6,10 +6,13 @@ import { unauthorizedError } from "@/errors";
 import { prisma } from "@/config";
 
 export async function authenticateToken(req: AuthenticatedRequest, res: Response, next: NextFunction) {
+  
   const authHeader = req.header("Authorization");
+  console.log(authHeader)
   if (!authHeader) return generateUnauthorizedResponse(res);
-
+  console.log("CHEGUEI 0")
   const token = authHeader.split(" ")[1];
+  console.log(token)
   if (!token) return generateUnauthorizedResponse(res);
 
   try {
